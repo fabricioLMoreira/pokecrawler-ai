@@ -1,0 +1,10 @@
+- name: Deploy Pokecrawler AI
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ensure Docker is installed
+      apt:
+        name: docker.io
+        state: present
+    - name: Start Services
+      command: docker-compose up -d
