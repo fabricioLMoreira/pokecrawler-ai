@@ -1,0 +1,34 @@
+# 🛑 Ignorar dependências do Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 🚀 Ignorar build do React/Vue/Angular (se houver)
+dist/
+build/
+
+# 📦 Ignorar pacotes do Docker
+.dockerignore
+docker-compose.override.yml
+
+# 🔍 Ignorar logs e arquivos temporários
+logs/
+*.log
+yarn.lock
+package-lock.json
+.DS_Store
+Thumbs.db
+
+# 🛠️ Ignorar arquivos do editor de código (VS Code, JetBrains)
+.vscode/
+.idea/
+*.swp
+
+# 🔧 Ignorar credenciais do Jenkins (evitar expor dados sensíveis)
+secrets/
+jenkins_home/
+.env
+
+# ⚙️ Ignorar arquivos de cache do Git
+.git/

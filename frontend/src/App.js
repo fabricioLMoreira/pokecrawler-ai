@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function App() {
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    axios.get("http://localhost:8000/")
+      .then(response => setMessage(response.data.message))
+      .catch(error => console.error(error));
+  }, []);
+
   return (
     <div>
-      <header style={{backgroundColor: 'red', color: 'white', padding: '10px'}}>
-        <h1>Pokecrawler AI - Dashboard</h1>
-      </header>
-      <main style={{padding: '20px'}}>
-        <p>Welcome to the Pokémon Dashboard! More features coming soon.</p>
-      </main>
+      <h1>PokéCrawler V1</h1>
+      <p>{message}</p>
     </div>
   );
 }
