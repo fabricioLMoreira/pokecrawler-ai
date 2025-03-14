@@ -1,18 +1,19 @@
 FROM node:18
 
+# Set the working directory inside the container
 WORKDIR /app
+ 
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-# Copiar package.json primeiro para otimizar cache do Docker
-COPY package.json package-lock.json ./
-
-# Instalar dependências
+# Install dependencies
 RUN npm install
-
-# Copiar todos os arquivos do frontend (incluindo public/)
-COPY . . 
-
-# Expor a porta do React (opcional)
+ 
+# Copy the rest of your application files
+COPY . .
+ 
+# Expose the port your app runs on
 EXPOSE 3000
-
-# Iniciar o servidor de desenvolvimento
+ 
+# Define the command to run your app
 CMD ["npm", "start"]
