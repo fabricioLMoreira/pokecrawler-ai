@@ -1,38 +1,131 @@
-.App {
+/* Estilo Global */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+.app-container {
   text-align: center;
+  padding: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Cabeçalho */
+header {
+  background-color: #ffd860;
+  padding: 20px;
+  color: #1e3a5f;
+  font-size: 26px;
+  font-weight: bold;
+  text-transform: uppercase;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Filtros */
+.filtros {
+  margin: 20px 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 15px;
+}
+
+.filtros input, .filtros select {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: #1e3a5f;
+  transition: all 0.3s ease;
+}
+
+.filtros input:focus, .filtros select:focus {
+  border-color: #ffb347;
+  outline: none;
+  box-shadow: 0px 0px 8px rgba(255, 179, 71, 0.5);
+}
+
+/* Grid de Pokémon - Alinhamento correto */
+.pokemon-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Garante 5 por linha */
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+}
+
+/* Cards de Pokémon */
+.pokemon-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  border-top: 6px solid #ffb347;
+  position: relative;
+  overflow: hidden;
+}
+
+.pokemon-card:hover {
+  transform: scale(1.04);
+  box-shadow: 4px 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Animação da imagem */
+.pokemon-image img {
+  width: 120px;
+  height: 120px;
+  transition: transform 0.4s ease-in-out;
+}
+
+.pokemon-card:hover .pokemon-image img {
+  transform: scale(1.2) translateY(-5px);
+}
+
+h3 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #1e3a5f;
+}
+
+.pokemon-type {
+  font-size: 14px;
   color: white;
+  background-color: #6fa3ef;
+  padding: 6px 12px;
+  border-radius: 15px;
+  display: inline-block;
+  font-weight: bold;
 }
 
-.App-link {
-  color: #61dafb;
+/* Paginação */
+.paginacao {
+  margin-top: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.paginacao button {
+  background-color: #6fa3ef;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  margin: 5px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  font-weight: bold;
+}
+
+.paginacao button:hover {
+  background-color: #ffb347;
+  transform: scale(1.1);
+}
+
+.paginacao .ativo {
+  background-color: #ffb347;
+  font-weight: bold;
 }
