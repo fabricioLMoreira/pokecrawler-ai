@@ -1,4 +1,5 @@
 import requests
+import datetime
 
 def fetch_pokemon_data():
     response = requests.get("https://pokeapi.co/api/v2/pokemon?limit=10")
@@ -10,5 +11,8 @@ def process_pokemon_data():
     return processed
 
 if __name__ == "__main__":
-    print("Starting Crawler...")
+    # Get current timestamp
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    print(f"{timestamp}: starting Crawler...")
     print(process_pokemon_data())
