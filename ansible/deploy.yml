@@ -15,6 +15,7 @@
       tags:
          - deploy
 
+#TO-DO remover cron existente
     - name: Adicionar cron manualmente no /etc/crontab
       lineinfile:
         path: "/etc/crontab"

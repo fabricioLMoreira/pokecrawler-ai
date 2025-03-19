@@ -4,5 +4,5 @@ CREATE TABLE pokemons (
     type_primary TEXT NOT NULL,
     type_secondary TEXT,
     url TEXT NOT NULL,
-    sprite TEXT NOT NULL
+    sprite TEXT
 );
