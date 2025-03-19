@@ -3,6 +3,12 @@ services:
     build: ./backend
     ports:
       - "8000:8000"
+    environment:
+      DB_USER: user
+      DB_PASSWORD: password
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: pokedb
 
   crawler:
     build: ./crawler
@@ -12,6 +18,13 @@ services:
     ports:
       - "3000:3000"
 
+    #volumes:
+      #- ./frontend:/app  # Isto permite alterações sem rebuild
+      #- /app/node_modules  # Evita problemas de dependências
+    #environment:
+        #- CHOKIDAR_USEPOLLING=true  # Para hot reload funcionar dentro do Docker
+      
+      
   db:
     image: postgres:14
     environment:
