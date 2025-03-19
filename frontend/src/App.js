@@ -5,11 +5,11 @@ import "./App.css";
 function App() {
   const [pokemons, setPokemons] = useState([]);
   const [filteredPokemons, setFilteredPokemons] = useState([]);
-  const [tipos, setTipos] = useState([]); // Correção para carregar os tipos corretamente
+  const [tipos, setTipos] = useState([]);
   const [pesquisa, setPesquisa] = useState("");
   const [filtroTipo, setFiltroTipo] = useState("");
   const [paginaAtual, setPaginaAtual] = useState(1);
-  const pokemonsPorPagina = 10; // Exibir 10 por página
+  const pokemonsPorPagina = 10;
 
   useEffect(() => {
     axios.get("http://localhost:8000/pokemons")
@@ -19,7 +19,7 @@ function App() {
       })
       .catch(error => console.error("Erro ao obter os Pokémon:", error));
 
-    axios.get("http://localhost:8000/types") // Corrigir chamada para carregar os tipos
+    axios.get("http://localhost:8000/types") 
       .then(response => {
         setTipos(response.data);
       })
@@ -29,20 +29,22 @@ function App() {
   useEffect(() => {
     let filtrados = pokemons;
 
+    // Filtro por nome
     if (pesquisa) {
       filtrados = filtrados.filter(pokemon =>
         pokemon.name.toLowerCase().includes(pesquisa.toLowerCase())
       );
     }
 
+    // Filtro por tipo primário ou secundário
     if (filtroTipo) {
       filtrados = filtrados.filter(pokemon =>
-        pokemon.type.includes(filtroTipo)
+        pokemon.type_primary === filtroTipo || pokemon.type_secondary === filtroTipo
       );
     }
 
     setFilteredPokemons(filtrados);
-    setPaginaAtual(1); // Resetar para a primeira página ao filtrar
+    setPaginaAtual(1); // Reset para a primeira página ao filtrar
   }, [pesquisa, filtroTipo, pokemons]);
 
   // Paginação
@@ -78,11 +80,19 @@ function App() {
           {pokemonsPagina.length > 0 ? (
             pokemonsPagina.map((pokemon) => (
               <div key={pokemon.id} className="pokemon-card">
-                <div className="pokemon-image">
-                  <img src={pokemon.image} alt={pokemon.name} />
+                {/* Imagem do Pokémon */}
+                <div className="pokemon-sprite">
+                  <img src={pokemon.sprite} alt={pokemon.name} />
                 </div>
-                <h3>{pokemon.name}</h3>
-                <p className="pokemon-type">{pokemon.type}</p>
+
+                {/* Nome e Tipos Alinhados */}
+                <div className="pokemon-info">
+                  <h3>{pokemon.name}</h3>
+                  <div className="pokemon-types">
+                    {pokemon.type_primary && <p className="pokemon-type">{pokemon.type_primary}</p>}
+                    {pokemon.type_secondary && <p className="pokemon-type">{pokemon.type_secondary}</p>}
+                  </div>
+                </div>
               </div>
             ))
           ) : (
@@ -90,6 +100,8 @@ function App() {
           )}
         </div>
       </main>
+
+
 
       {/* Paginação */}
       <div className="paginacao">
