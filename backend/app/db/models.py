@@ -1,3 +1,8 @@
+# Define os modelos (tabelas) da DB com SQLAlchemy.
+# Cada classe representa uma tabela e os seus atributos representam colunas.
+#
+# Neste projeto, a tabela 'pokemons' armazena os dados principais dos Pokémon.
+
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 

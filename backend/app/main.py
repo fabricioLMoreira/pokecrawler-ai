@@ -1,39 +1,22 @@
-from fastapi import FastAPI, Depends
-from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
+# Ponto de entrada da aplicação FastAPI.
+# Aqui é criado o app, configurado o middleware de CORS e incluídos as routas da aplicação.
 
-from database import get_db
-from models import Pokemon
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from core.config import ALLOWED_ORIGINS
+from api.routes_pokemon import router as pokemon_router
+from db.database import engine, Base
 
 app = FastAPI()
 
-# Configuração do CORS para permitir requisições do frontend
+# CORS settings
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Permitir acesso do frontend
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Endpoint para obter todos os Pokémon
-@app.get("/pokemons")
-async def get_pokemons(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Pokemon))
-    pokemons = result.scalars().all()
-    return pokemons
-
-# Endpoint para obter todos os tipos únicos de Pokémon
-@app.get("/types")
-async def get_types(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Pokemon.type_primary, Pokemon.type_secondary))
-    rows = result.all()
-    
-    unique_types = set()
-    for primary, secondary in rows:
-        unique_types.add(primary)
-        if secondary:
-            unique_types.add(secondary)
-    
-    return sorted(unique_types)
+# Regista as rotas
+app.include_router(pokemon_router, prefix="/pokemons", tags=["Pokémons"])
