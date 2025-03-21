@@ -6,8 +6,8 @@
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from app.db.models import Pokemon
-from app.schemas.pokemon import PokemonCreate, PokemonUpdate
+from db.models import Pokemon
+from schemas.pokemon import PokemonCreate, PokemonUpdate
 
 # Busca todos os pokémon na base de dados
 async def get_all_pokemons(db: AsyncSession):
