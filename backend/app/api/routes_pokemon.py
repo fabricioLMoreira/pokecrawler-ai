@@ -1,6 +1,6 @@
 # Este ficheiro define os endpoints da API REST relacionados aos Pokémon.
 #
-# Cada rota segue o padrão RESTful, usando os métodos HTTP adequados:
+# Cada rota segue o padrão RESTful, utilizando os métodos HTTP adequados:
 # - GET: para listar e obter Pokémon
 # - POST: para criar novos Pokémon
 # - PUT: para atualizar Pokémon existentes
