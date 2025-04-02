@@ -51,13 +51,20 @@ pipeline {
 
     post {
         failure {
-            mail to: 'paula.lopes.developer@gmail.com',
-                 subject: 'Pipeline Jenkins Falhou',
-                 body: 'Erro no pipeline CI/CD. Verifica os logs do Jenkins.'
-        }
+            mail to: 'paula.lopes',
+                subject: "🚨 Falha na Pipeline: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """A pipeline falhou no estágio: ${env.STAGE_NAME}
 
+                🔍 Verifica os logs aqui: ${env.BUILD_URL}
+
+                Commit: ${env.GIT_COMMIT}
+                Autor: ${env.GIT_AUTHOR_NAME}
+                """
+        }
+    
         success {
             echo 'Pipeline concluída com sucesso!'
         }
     }
+
 }
