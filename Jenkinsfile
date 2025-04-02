@@ -51,9 +51,9 @@ pipeline {
 
     post {
         failure {
-            mail to: 'paula.lopes',
+            mail to: 'paula.lopes.developer@gmail.com',
                 subject: "🚨 Falha na Pipeline: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """A pipeline falhou no estágio: ${env.STAGE_NAME}
+                body: """A pipeline falhou no stage: ${env.STAGE_NAME}
 
                 🔍 Verifica os logs aqui: ${env.BUILD_URL}
 
