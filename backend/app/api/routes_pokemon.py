@@ -23,10 +23,10 @@ from crud.pokemon import (
     update_pokemon, delete_pokemon, get_unique_types
 )
 
-router = APIRouter()
+router = APIRouter(prefix="/v1/pokemons", tags=["Pokémons"])
 
 # GET /pokemons - Lista todos os pokémon
-@router.get("/", response_model=List[PokemonOut])
+@router.get("", response_model=List[PokemonOut])
 async def list_pokemons(db: AsyncSession = Depends(get_db)):
     result = await get_all_pokemons(db)
     if not result:
@@ -42,7 +42,7 @@ async def get_pokemon(pokemon_id: int, db: AsyncSession = Depends(get_db)):
     return pokemon
 
 # POST /pokemons - Cria um novo pokémon
-@router.post("/", response_model=PokemonOut, status_code=201)
+@router.post("", response_model=PokemonOut, status_code=201)
 async def create(pokemon: PokemonCreate, db: AsyncSession = Depends(get_db)):
     return await create_pokemon(db, pokemon)
 
@@ -61,8 +61,8 @@ async def delete(pokemon_id: int, db: AsyncSession = Depends(get_db)):
     if not deleted:
         raise HTTPException(status_code=404, detail="Pokémon não encontrado")
 
-# GET /pokemons/types/list - Lista todos os tipos únicos de pokémon
-@router.get("/types/list", response_model=List[str])
+# GET /pokemons/pokemon-types - Lista todos os tipos únicos de pokémon
+@router.get("/pokemon-types", response_model=List[str])
 async def list_types(db: AsyncSession = Depends(get_db)):
     tipos = await get_unique_types(db)
     if not tipos:
