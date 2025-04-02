@@ -18,14 +18,16 @@ pipeline {
         stage('Login to DockerHub') {
             steps {
                 dir("${env.WORKSPACE}") {
-                    echo '🔐 A fazer login no DockerHub...'
+                    echo 'A fazer login no DockerHub...'
                     withCredentials([usernamePassword(
                         credentialsId: 'dockerhub',
                         usernameVariable: 'DOCKER_USER',
                         passwordVariable: 'DOCKER_PASS'
                     )]) {
-                        sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                        sh 'echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin'
+                        sh 'docker-compose push'
                     }
+
                 }
             }
         }
