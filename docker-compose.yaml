@@ -1,6 +1,7 @@
 services:
   backend:
     build: ./backend
+    image: a2009076370/backend:latest
     ports:
       - "8000:8000"
     environment:
@@ -12,9 +13,11 @@ services:
 
   crawler:
     build: ./crawler
+    image: a2009076370/crawler:latest
 
   frontend:
     build: ./frontend
+    image: a2009076370/frontend:latest
     ports:
       - "3000:3000"
 

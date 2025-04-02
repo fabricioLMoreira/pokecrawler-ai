@@ -1,22 +1,54 @@
 pipeline {
     agent any
+
+    environment {
+        DOCKERHUB_USER = 'a2009076370'
+    }
+
     stages {
         stage('Build Docker Images') {
             steps {
-                sh 'docker-compose build'
+                dir("${env.WORKSPACE}") {
+                    echo 'A construir imagens com Docker Compose...'
+                    sh 'docker-compose build'
+                }
             }
         }
-        stage('Push to DockerHub') {
+
+        stage('Login to DockerHub') {
             steps {
-                echo 'Here we would push to DockerHub'
+                dir("${env.WORKSPACE}") {
+                    echo '🔐 A fazer login no DockerHub...'
+                    withCredentials([usernamePassword(
+                        credentialsId: 'dockerhub',
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_PASS'
+                    )]) {
+                        sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                    }
+                }
+            }
+        }
+
+        stage('Push Docker Images') {
+            steps {
+                dir("${env.WORKSPACE}") {
+                    echo 'A fazer push para o DockerHub...'
+                    sh 'docker-compose push'
+                }
             }
         }
     }
+
     post {
         failure {
-            mail to: 'fabricio@example.com',
-                 subject: 'Pipeline Failed',
-                 body: 'Pipeline failed - check Jenkins logs'
+            mail to: 'paula.lopes.developer@gmail.com',
+                 subject: 'Pipeline Jenkins Falhou',
+                 body: 'Erro no pipeline CI/CD. Verifica os logs do Jenkins.'
+        }
+
+        success {
+            echo 'Pipeline concluída com sucesso!'
         }
     }
 }
