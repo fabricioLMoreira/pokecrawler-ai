@@ -60,12 +60,12 @@ pipeline {
             }
         }
 
-        stage('Simular Erro') {
+        /* stage('Simular Erro') {
             steps {
                 echo '💣 A simular falha na pipeline...'
                 sh 'exit 1'
             }
-        }
+        } */
     }
 
     post {
