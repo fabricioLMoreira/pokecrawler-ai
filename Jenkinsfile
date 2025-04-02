@@ -41,6 +41,25 @@ pipeline {
             }
         }
 
+        stage('Get Commit Author') {
+            steps {
+                script {
+                    def author = sh(script: "git log -1 --pretty=format:'%an <%ae>'", returnStdout: true).trim()
+                    env.COMMIT_AUTHOR = author
+                }
+            }
+        }
+
+        stage('Obter autor do commit') {
+            steps {
+                script {
+                    def author = sh(script: "git log -1 --pretty=format:'%an <%ae>'", returnStdout: true).trim()
+                    env.COMMIT_AUTHOR = author
+                    echo "Autor do último commit: ${author}"
+                }
+            }
+        }
+
         stage('Simular Erro') {
             steps {
                 echo '💣 A simular falha na pipeline...'
@@ -58,7 +77,7 @@ pipeline {
                 🔍 Verifica os logs aqui: ${env.BUILD_URL}
 
                 Commit: ${env.GIT_COMMIT}
-                Autor: ${env.GIT_AUTHOR_NAME}
+                Autor: ${env.COMMIT_AUTHOR}
                 """
         }
     
