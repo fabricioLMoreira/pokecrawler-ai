@@ -1,0 +1,26 @@
+.filtros {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .filtros input, .filtros select {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: white;
+    color: #1e3a5f;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 250px;
+  }
+  
+  .filtros input:focus, .filtros select:focus {
+    border-color: #ffb347;
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(255, 179, 71, 0.5);
+  }
+  

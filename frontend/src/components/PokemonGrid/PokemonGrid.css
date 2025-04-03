@@ -1,0 +1,27 @@
+.pokemon-grid {
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+}
+
+/* 5 por linha no desktop */
+@media (min-width: 1024px) {
+  .pokemon-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* 3 por linha em tablets */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .pokemon-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 1-2 por linha em telemóveis */
+@media (max-width: 767px) {
+  .pokemon-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}

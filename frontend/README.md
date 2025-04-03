@@ -68,3 +68,19 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+
+-------------------------------------------------------------------------------
+
+Ficheiro	Responsabilidade: 
+pokemonApi.js	Axios + funções de API (GET, POST, etc)
+Header.jsx	Cabeçalho da aplicação
+Filtros.jsx	Input de pesquisa + dropdown de tipo
+PokemonCard.jsx	Card individual de Pokémon
+PokemonGrid.jsx	Grelha com todos os cards
+Modal.jsx	Modal com detalhes
+Paginacao.jsx	Component de paginação
+Home.jsx	Página principal com lógica (hooks)
+App.js	Apenas rota e layout base
