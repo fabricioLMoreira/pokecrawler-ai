@@ -25,6 +25,14 @@ from crud.pokemon import (
 
 router = APIRouter(prefix="/v1/pokemons", tags=["Pokémons"])
 
+# GET /pokemons/pokemon-types - Lista todos os tipos únicos de pokémon
+@router.get("/pokemon-types", response_model=List[str])
+async def list_types(db: AsyncSession = Depends(get_db)):
+    tipos = await get_unique_types(db)
+    if not tipos:
+        raise HTTPException(status_code=204, detail="Nenhum tipo encontrado")
+    return tipos
+
 # GET /pokemons - Lista todos os pokémon
 @router.get("", response_model=List[PokemonOut])
 async def list_pokemons(db: AsyncSession = Depends(get_db)):
@@ -60,11 +68,3 @@ async def delete(pokemon_id: int, db: AsyncSession = Depends(get_db)):
     deleted = await delete_pokemon(db, pokemon_id)
     if not deleted:
         raise HTTPException(status_code=404, detail="Pokémon não encontrado")
-
-# GET /pokemons/pokemon-types - Lista todos os tipos únicos de pokémon
-@router.get("/pokemon-types", response_model=List[str])
-async def list_types(db: AsyncSession = Depends(get_db)):
-    tipos = await get_unique_types(db)
-    if not tipos:
-        raise HTTPException(status_code=204, detail="Nenhum tipo encontrado")
-    return tipos
