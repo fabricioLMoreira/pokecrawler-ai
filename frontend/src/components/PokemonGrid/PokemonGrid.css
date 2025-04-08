@@ -1,27 +1,64 @@
+
 .pokemon-grid {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
   padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+/* Card básico */
+.pokemon-card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  border-top: 6px solid #ffcb05;
+  position: relative;
+  z-index: 1;
+}
+
+/* Hover 3D tilt */
+.pokemon-card:hover {
+  transform: scale(1.05) rotateX(4deg) rotateY(2deg);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Card ativo (clicado) */
+.pokemon-card.active {
+  transform: scale(1.12) rotateX(0deg) rotateY(0deg);
+  z-index: 10;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Imagem */
+.pokemon-sprite {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-/* 5 por linha no desktop */
-@media (min-width: 1024px) {
-  .pokemon-grid {
-    grid-template-columns: repeat(5, 1fr);
-  }
+.pokemon-sprite img {
+  max-width: 100%;
+  object-fit: contain;
 }
 
-/* 3 por linha em tablets */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .pokemon-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+/* Tipos */
+.pokemon-type {
+  background: #2a75bb;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  margin: 2px;
+  font-size: 12px;
+  font-weight: bold;
 }
 
-/* 1-2 por linha em telemóveis */
-@media (max-width: 767px) {
-  .pokemon-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  }
-}

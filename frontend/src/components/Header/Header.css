@@ -1,11 +1,44 @@
-header {
-    background-color: #ffd860;
-    padding: 15px;
-    color: #1e3a5f;
-    font-size: 22px;
-    font-weight: bold;
-    text-transform: uppercase;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-  
+.app-header {
+  background: linear-gradient(135deg, #ffcb05 0%, #ffe564 100%);
+  padding: 20px 32px 16px;
+  color: #2a75bb;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.header-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.app-header h1 {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0;
+  text-transform: uppercase;
+  color: #2a75bb;
+  text-shadow: 1px 1px 0 #fff, 2px 2px 0 #ffd700, 3px 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-divider {
+  margin-top: 18px;
+  height: 10px;
+  background: repeating-linear-gradient(
+    45deg,
+    #2a75bb,
+    #2a75bb 10px,
+    #ffcb05 10px,
+    #ffcb05 20px
+  );
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
