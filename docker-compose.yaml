@@ -4,12 +4,19 @@ services:
     image: a2009076370/backend:latest
     ports:
       - "8000:8000"
+    depends_on:
+      - keycloak
+      - db
     environment:
-      DB_USER: user
-      DB_PASSWORD: password
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_NAME: pokedb
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=pokedb
+      - KEYCLOAK_URL=http://keycloak:8080
+      - KEYCLOAK_REALM=pokecrawler
+      - KEYCLOAK_CLIENT_ID=backend-client
+      - KEYCLOAK_CLIENT_SECRET=YMk0vq10Ne4KFhcSGOqgQMZWV1Jw7hdb
 
   crawler:
     build: ./crawler
@@ -43,10 +50,14 @@ services:
   keycloak:
     image: keycloak/keycloak:26.1.4
     environment:
-      - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=admin
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
     ports:
-      - "8080:8080"
+      - "8180:8080"
+    command: start-dev
+    volumes:
+      - keycloak_data:/opt/keycloak/data
 
 volumes:
   postgres_data:
+  keycloak_data:

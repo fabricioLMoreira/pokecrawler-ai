@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from core.config import ALLOWED_ORIGINS
 from api.routes_pokemon import router as pokemon_router
 from db.database import engine, Base
+from core.auth import router as auth_router
 
 app = FastAPI(
     title="PokerCrawlerAPI",
@@ -24,4 +25,5 @@ app.add_middleware(
 
 # Regista as rotas
 app.include_router(pokemon_router)
+app.include_router(auth_router)
 
