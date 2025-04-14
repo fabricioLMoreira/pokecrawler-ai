@@ -18,7 +18,7 @@ class PokemonBase(BaseModel):
     name: str
     type_primary: str
     type_secondary: Optional[str] = None
-    url: str
+    url: Optional[str] = None
     sprite: Optional[str] = None
 
 class PokemonCreate(PokemonBase):
