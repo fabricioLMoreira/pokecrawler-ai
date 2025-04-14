@@ -55,9 +55,8 @@ services:
       - keycloak_data:/opt/keycloak/data
 
   jenkins:
-    build: ./jenkins
+    image: jenkins/jenkins:lts
     container_name: jenkins
-    user: root
     ports:
       - "8080:8080"
       - "50000:50000"
@@ -70,5 +69,3 @@ volumes:
   postgres_data:
   keycloak_data:
   jenkins_home:
-    external: true
-    name: jenkins_home
