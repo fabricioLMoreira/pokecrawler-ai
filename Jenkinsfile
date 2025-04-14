@@ -10,7 +10,7 @@ pipeline {
             steps {
                 dir("${env.WORKSPACE}") {
                     echo 'A construir imagens com Docker Compose...'
-                    sh 'docker compose build'
+                    sh 'docker-compose build'
                 }
             }
         }
@@ -35,7 +35,7 @@ pipeline {
             steps {
                 dir("${env.WORKSPACE}") {
                     echo 'A fazer push para o DockerHub...'
-                    sh 'docker compose push'
+                    sh 'docker-compose push'
                 }
             }
         }
