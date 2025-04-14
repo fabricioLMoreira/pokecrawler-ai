@@ -69,7 +69,7 @@ pipeline {
 
     post {
         failure {
-            mail to: '',
+            mail to: 'paula.lopes.developer@gmail.coom',
                 subject: "🚨 Falha na Pipeline: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """A pipeline falhou no stage: ${env.STAGE_NAME}
 
