@@ -10,7 +10,7 @@ pipeline {
             steps {
                 dir("${env.WORKSPACE}") {
                     echo 'A construir imagens com Docker Compose...'
-                    sh 'docker-compose build'
+                    sh 'docker compose build'
                 }
             }
         }
@@ -25,7 +25,6 @@ pipeline {
                         passwordVariable: 'DOCKER_PASS'
                     )]) {
                         sh 'echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin'
-                        sh 'docker-compose push'
                     }
 
                 }
@@ -36,7 +35,7 @@ pipeline {
             steps {
                 dir("${env.WORKSPACE}") {
                     echo 'A fazer push para o DockerHub...'
-                    sh 'docker-compose push'
+                    sh 'docker compose push'
                 }
             }
         }
@@ -70,7 +69,7 @@ pipeline {
 
     post {
         failure {
-            mail to: 'paula.lopes.developer@gmail.com',
+            mail to: '',
                 subject: "🚨 Falha na Pipeline: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """A pipeline falhou no stage: ${env.STAGE_NAME}
 

@@ -2,6 +2,7 @@ services:
   backend:
     build: ./backend
     image: a2009076370/backend:latest
+    container_name: backend
     ports:
       - "8000:8000"
     depends_on:
@@ -21,20 +22,15 @@ services:
   crawler:
     build: ./crawler
     image: a2009076370/crawler:latest
+    container_name: crawler
 
   frontend:
     build: ./frontend
     image: a2009076370/frontend:latest
+    container_name: frontend
     ports:
       - "3000:3000"
-
-    #volumes:
-      #- ./frontend:/app  # Isto permite alterações sem rebuild
-      #- /app/node_modules  # Evita problemas de dependências
-    #environment:
-        #- CHOKIDAR_USEPOLLING=true  # Para hot reload funcionar dentro do Docker
-      
-      
+    
   db:
     image: postgres:14
     environment:
@@ -58,6 +54,21 @@ services:
     volumes:
       - keycloak_data:/opt/keycloak/data
 
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
 volumes:
   postgres_data:
   keycloak_data:
+  jenkins_home:
+    external: true
+    name: jenkins_home
