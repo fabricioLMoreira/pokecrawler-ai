@@ -29,9 +29,20 @@ const authHeaders = () => ({
   },
 });
 
-// ✅ Funções para chamadas autenticadas
+// Exige autenticação
 export const getAllPokemons = () =>
   axios.get(POKEMON_URL, authHeaders());
 
 export const getPokemonTypes = () =>
   axios.get(`${POKEMON_URL}/pokemon-types`, authHeaders());
+
+// Apaga um pokémon (com token)
+export const deletePokemon = async (id) => {
+  return axios.delete(`${POKEMON_URL}/${id}`, authHeaders());
+};
+
+// Atualiza um pokémon (com token)
+export const updatePokemon = async (id, data) => {
+  return axios.put(`${POKEMON_URL}/${id}`, data, authHeaders());
+};
+
