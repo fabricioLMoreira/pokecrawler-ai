@@ -7,7 +7,7 @@ const Header = ({ user, onLogout, onLoginClick }) => {
     <header className="app-header">
       <div className="header-content">
         <img src={pokeball} alt="Pokéball" className="header-icon" />
-        <h1>Pokecrawler - V0.0.1 Beta</h1>
+        <h1>Pokecrawler - V.0.0.2 Beta</h1>
 
         {/* Zona de autenticação à direita */}
         <div className="header-user-info">
