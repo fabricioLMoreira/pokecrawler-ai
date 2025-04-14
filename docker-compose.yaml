@@ -55,7 +55,7 @@ services:
       - keycloak_data:/opt/keycloak/data
 
   jenkins:
-    image: jenkins/jenkins:lts
+    build: ./jenkins
     container_name: jenkins
     user: root
     ports:
