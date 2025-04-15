@@ -13,12 +13,26 @@ pipeline {
     }
 
     stages {
-        /* Pipeline script from SCM no Jenkins UI: esta a fazer isto
+        // Checkout já está a ser feito automaticamente via "Pipeline script from SCM"
+        /*
         stage('Checkout') {
             steps {
                 git branch: params.BRANCH, url: "${GIT_REPO_URL}"
             }
         } */
+
+        stage('Docker Login') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    sh 'echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin'
+                }
+            }
+        }
+
         stage('Build and Publish Backend') {
             steps {
                 dir('backend') {
