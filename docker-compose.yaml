@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   backend:
     build: ./backend
@@ -9,20 +11,22 @@ services:
       - keycloak
       - db
     environment:
-      - DB_USER=user
-      - DB_PASSWORD=password
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_NAME=pokedb
-      - KEYCLOAK_URL=http://keycloak:8080
-      - KEYCLOAK_REALM=pokecrawler
-      - KEYCLOAK_CLIENT_ID=backend-client
-      - KEYCLOAK_CLIENT_SECRET=YMk0vq10Ne4KFhcSGOqgQMZWV1Jw7hdb
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - KEYCLOAK_URL=${KEYCLOAK_URL}
+      - KEYCLOAK_REALM=${KEYCLOAK_REALM}
+      - KEYCLOAK_CLIENT_ID=${KEYCLOAK_CLIENT_ID}
+      - KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}
 
   crawler:
     build: ./crawler
     image: a2009076370/crawler:latest
     container_name: crawler
+    depends_on:
+      - db
 
   frontend:
     build: ./frontend
@@ -30,13 +34,14 @@ services:
     container_name: frontend
     ports:
       - "3000:3000"
-    
+
   db:
     image: postgres:14
+    container_name: db
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: pokedb
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     ports:
       - "5432:5432"
     volumes:
@@ -45,9 +50,10 @@ services:
 
   keycloak:
     image: keycloak/keycloak:26.1.4
+    container_name: keycloak
     environment:
-      - KEYCLOAK_ADMIN=admin
-      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
+      - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
     ports:
       - "8180:8080"
     command: start-dev
@@ -55,21 +61,18 @@ services:
       - keycloak_data:/opt/keycloak/data
 
   jenkins:
-    build:
-      context: ./jenkins
-      dockerfile: Dockerfile
+    image: ricardofilipe/jenkins-pd:lts
     container_name: jenkins
-    user: root
     ports:
       - "8080:8080"
       - "50000:50000"
     volumes:
-      - pokecrawler-ai_jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock  # Permite usar Docker no pipeline
     restart: unless-stopped
+    user: "${UID}:${GID}"  # Usa mesmo UID/GID do host (definido no .env)
 
 volumes:
   postgres_data:
   keycloak_data:
-  pokecrawler-ai_jenkins_home:
-
+  jenkins_home:

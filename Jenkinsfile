@@ -1,41 +1,55 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'main', description: 'Git branch')
+        string(name: 'TAG', defaultValue: 'latest', description: 'Docker tag')
+    }
+
     environment {
-        DOCKERHUB_USER = 'a2009076370'
+        DOCKERHUB_USER = "${env.DOCKERHUB_USER}"
+        GIT_REPO_URL   = "${env.GIT_REPO_URL}"
+        EMAIL_TO       = "${env.EMAIL_TO}"
     }
 
     stages {
-        stage('Build Docker Images') {
+        stage('Checkout') {
             steps {
-                dir("${env.WORKSPACE}") {
-                    echo 'A construir imagens com Docker Compose...'
-                    sh 'docker-compose build'
+                git branch: params.BRANCH, url: "${GIT_REPO_URL}"
+            }
+        }
+        stage('Build and Publish Backend') {
+            steps {
+                dir('backend') {
+                    echo 'A construir e publicar o Backend...'
+                    sh """
+                        docker build -t ${DOCKERHUB_USER}/backend:${params.TAG} .
+                        docker push ${DOCKERHUB_USER}/backend:${params.TAG}
+                    """
                 }
             }
         }
 
-        stage('Login to DockerHub') {
+        stage('Build and Publish Frontend') {
             steps {
-                dir("${env.WORKSPACE}") {
-                    echo 'A fazer login no DockerHub...'
-                    withCredentials([usernamePassword(
-                        credentialsId: 'dockerhub',
-                        usernameVariable: 'DOCKER_USER',
-                        passwordVariable: 'DOCKER_PASS'
-                    )]) {
-                        sh 'echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin'
-                    }
-
+                dir('frontend') {
+                    echo 'A construir e publicar o Frontend...'
+                    sh """
+                        docker build -t ${DOCKERHUB_USER}/frontend:${params.TAG} .
+                        docker push ${DOCKERHUB_USER}/frontend:${params.TAG}
+                    """
                 }
             }
         }
 
-        stage('Push Docker Images') {
+        stage('Build and Publish Crawler') {
             steps {
-                dir("${env.WORKSPACE}") {
-                    echo 'A fazer push para o DockerHub...'
-                    sh 'docker-compose push'
+                dir('crawler') {
+                    echo 'A construir e publicar o Crawler...'
+                    sh """
+                        docker build -t ${DOCKERHUB_USER}/crawler:${params.TAG} .
+                        docker push ${DOCKERHUB_USER}/crawler:${params.TAG}
+                    """
                 }
             }
         }
@@ -49,17 +63,17 @@ pipeline {
             }
         }
 
-        stage('Simular Erro') {
-            steps {
-                echo '💣 A simular falha na pipeline...'
-                sh 'exit 1'
-            }
-        }
+        // stage('Simular Erro') {
+        //     steps {
+        //         echo '💣 A simular falha na pipeline...'
+        //         sh 'exit 1'
+        //     }
+        // }
     }
 
     post {
         failure {
-            mail to: 'paula.lopes.developer@gmail.com',
+            mail to: "${EMAIL_TO}",
                 subject: "🚨 Falha na Pipeline: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """A pipeline falhou no stage: ${env.STAGE_NAME}
 
