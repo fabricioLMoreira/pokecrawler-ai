@@ -21,6 +21,14 @@ pipeline {
             }
         } */
 
+        stage('Simular Erro') {
+            steps {
+                echo '💣 A simular falha na pipeline...'
+               sh 'exit 1'
+            }
+        }
+
+
         stage('Docker Login') {
             steps {
                 withCredentials([usernamePassword(
@@ -78,12 +86,7 @@ pipeline {
             }
         }
 
-        // stage('Simular Erro') {
-        //     steps {
-        //         echo '💣 A simular falha na pipeline...'
-        //         sh 'exit 1'
-        //     }
-        // }
+
     }
 
     post {
