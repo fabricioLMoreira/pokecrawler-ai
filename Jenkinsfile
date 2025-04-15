@@ -102,6 +102,9 @@ pipeline {
         success {
             echo 'Pipeline concluída com sucesso!'
         }
+	always {
+	    sh 'docker logout'
+	}
     }
 
 }
