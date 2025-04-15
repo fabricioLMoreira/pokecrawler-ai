@@ -61,13 +61,13 @@ services:
       - keycloak_data:/opt/keycloak/data
 
   jenkins:
-    image: ricardofilipe/jenkins-pd:lts
+    image: jenkins/jenkins:lts #ricardofilipe/jenkins-pd:lts
     container_name: jenkins
     ports:
       - "8080:8080"
       - "50000:50000"
     volumes:
-      - jenkins_home:/var/jenkins_home
+      - pokecrawler-ai_jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock  # Permite usar Docker no pipeline
     restart: unless-stopped
     user: "${UID}:${GID}"  # Usa mesmo UID/GID do host (definido no .env)
@@ -76,3 +76,4 @@ volumes:
   postgres_data:
   keycloak_data:
   jenkins_home:
+  pokecrawler-ai_jenkins_home:

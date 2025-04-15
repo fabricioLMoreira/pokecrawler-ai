@@ -13,11 +13,12 @@ pipeline {
     }
 
     stages {
+        /* Pipeline script from SCM no Jenkins UI: esta a fazer isto
         stage('Checkout') {
             steps {
                 git branch: params.BRANCH, url: "${GIT_REPO_URL}"
             }
-        }
+        } */
         stage('Build and Publish Backend') {
             steps {
                 dir('backend') {
