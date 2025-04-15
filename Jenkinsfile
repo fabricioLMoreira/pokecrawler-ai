@@ -25,6 +25,7 @@ pipeline {
                         passwordVariable: 'DOCKER_PASS'
                     )]) {
                         sh 'echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin'
+                        sh 'docker-compose push'
                     }
 
                 }
@@ -49,22 +50,12 @@ pipeline {
             }
         }
 
-        stage('Obter autor do commit') {
-            steps {
-                script {
-                    def author = sh(script: "git log -1 --pretty=format:'%an <%ae>'", returnStdout: true).trim()
-                    env.COMMIT_AUTHOR = author
-                    echo "Autor do último commit: ${author}"
-                }
-            }
-        }
-
-        /* stage('Simular Erro') {
+        stage('Simular Erro') {
             steps {
                 echo '💣 A simular falha na pipeline...'
                 sh 'exit 1'
             }
-        } */
+        }
     }
 
     post {
