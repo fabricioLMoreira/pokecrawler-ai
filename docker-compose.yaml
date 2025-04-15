@@ -61,7 +61,7 @@ services:
       - keycloak_data:/opt/keycloak/data
 
   jenkins:
-    image: ricardofilipe/jenkins-pd:lts #jenkins/jenkins:lts
+    build: ./jenkins #ricardofilipe/jenkins-pd:lts #jenkins/jenkins:lts
     container_name: jenkins
     ports:
       - "8080:8080"
