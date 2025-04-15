@@ -75,5 +75,4 @@ services:
 volumes:
   postgres_data:
   keycloak_data:
-  jenkins_home:
   pokecrawler-ai_jenkins_home:
