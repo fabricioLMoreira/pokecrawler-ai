@@ -6,10 +6,20 @@ body {
   color: #2a75bb;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 .app-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }

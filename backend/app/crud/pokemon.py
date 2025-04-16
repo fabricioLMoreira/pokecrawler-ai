@@ -9,17 +9,17 @@ from sqlalchemy.future import select
 from db.models import Pokemon
 from schemas.pokemon import PokemonCreate, PokemonUpdate
 
-# Busca todos os pokémon na base de dados
+# Get todos os pokémon na base de dados
 async def get_all_pokemons(db: AsyncSession):
     result = await db.execute(select(Pokemon))
     return result.scalars().all()
 
-# Busca um pokémon por ID
+# Get um pokémon por ID
 async def get_pokemon_by_id(db: AsyncSession, pokemon_id: int):
     result = await db.execute(select(Pokemon).where(Pokemon.id == pokemon_id))
     return result.scalar_one_or_none()
 
-# Cria um novo pokémon na base de dados
+# Crea um novo pokémon na base de dados
 async def create_pokemon(db: AsyncSession, pokemon: PokemonCreate):
     db_pokemon = Pokemon(**pokemon.dict())
     db.add(db_pokemon)
@@ -32,7 +32,7 @@ async def update_pokemon(db: AsyncSession, pokemon_id: int, data: PokemonUpdate)
     db_pokemon = await get_pokemon_by_id(db, pokemon_id)
     if not db_pokemon:
         return None
-    for key, value in data.dict().items():
+    for key, value in data.dict(exclude_unset=True).items():
         setattr(db_pokemon, key, value)
     await db.commit()
     await db.refresh(db_pokemon)

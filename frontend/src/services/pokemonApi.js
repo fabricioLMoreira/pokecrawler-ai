@@ -3,46 +3,39 @@ import axios from "axios";
 const BASE_API_URL = "http://localhost:8000";
 const POKEMON_URL = `${BASE_API_URL}/v1/pokemons`;
 
-// Login e guarda do token
-export const login = async (username, password) => {
-  try {
-    const response = await axios.post(`${BASE_API_URL}/login`, {
-      username,
-      password,
-    });
-
-    const token = response.data.access_token;
-
-    // Guarda no localStorage para manter login
-    localStorage.setItem("access_token", token);
-
-    return response.data;
-  } catch (error) {
-    throw new Error("Login falhou");
-  }
-};
-
-// Headers com token atual do localStorage
-const authHeaders = () => ({
+// Cabeçalhos com token (quando necessário)
+const authHeaders = (token) => ({
   headers: {
-    Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+    Authorization: `Bearer ${token}`,
   },
 });
 
-// Exige autenticação
-export const getAllPokemons = () =>
-  axios.get(POKEMON_URL, authHeaders());
+// Lista todos os Pokémons (público)
+export const getAllPokemons = () => axios.get(POKEMON_URL);
 
+// Lista tipos (público)
 export const getPokemonTypes = () =>
-  axios.get(`${POKEMON_URL}/pokemon-types`, authHeaders());
+  axios.get(`${POKEMON_URL}/pokemon-types`);
 
-// Apaga um pokémon (com token)
-export const deletePokemon = async (id) => {
-  return axios.delete(`${POKEMON_URL}/${id}`, authHeaders());
+// Cria um pokémon (autenticado)
+export const createPokemon = async (data, token) => {
+  return axios
+    .post(`${POKEMON_URL}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) => res.data);
 };
 
-// Atualiza um pokémon (com token)
-export const updatePokemon = async (id, data) => {
-  return axios.put(`${POKEMON_URL}/${id}`, data, authHeaders());
-};
+// Atualiza um pokémon (autenticado)
+export const updatePokemon = (id, data, token) =>
+  axios.put(`${POKEMON_URL}/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(res => res.data);
 
+// Apaga um pokémon (autenticado)
+export const deletePokemon = (id, token) =>
+  axios.delete(`${POKEMON_URL}/${id}`, authHeaders(token));

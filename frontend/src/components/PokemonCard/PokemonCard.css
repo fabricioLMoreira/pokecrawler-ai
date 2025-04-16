@@ -59,3 +59,35 @@
   display: inline-block;
   margin: 2px;
 }
+
+.card-icons {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  display: flex;
+  gap: 10px;
+  z-index: 1;
+}
+
+.edit-icon,
+.delete-icon {
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.edit-icon:hover {
+  background-color: #f0ad4e;
+}
+
+.delete-icon:hover {
+  background-color: #d9534f;
+}
+
+.pokemon-card {
+  position: relative; /* necessário para os ícones absolutos */
+}
