@@ -1,0 +1,4 @@
+- name: Criar Docker network
+  community.docker.docker_network:
+    name: pokecrawler_network
+    state: present

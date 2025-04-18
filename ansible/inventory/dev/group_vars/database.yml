@@ -2,7 +2,7 @@ database_image: "postgres:14"
 database_ports:
   - "5432:5432"
 database_host: postgres
-database_port: 5432
+database_port: "5432"
 database_env:
   POSTGRES_DB: pokecrawlerdb
   POSTGRES_USER: user

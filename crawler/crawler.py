@@ -2,9 +2,7 @@ import requests
 import datetime
 import psycopg2
 import logging
-from dotenv import load_dotenv
 import os
-load_dotenv("/opt/pokecrawler/.env")
 
 BASE_URL = "https://pokeapi.co/api/v2"
 
