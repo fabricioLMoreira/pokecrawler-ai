@@ -11,7 +11,7 @@ const Header = () => {
     <header className="app-header">
       <div className="header-content">
         <img src={pokeball} alt="Pokéball" className="header-icon" />
-        <h1>Pokecrawler</h1>
+        <h1>PokéCrawler</h1>
 
         <div className="header-user-info">
           {user ? (

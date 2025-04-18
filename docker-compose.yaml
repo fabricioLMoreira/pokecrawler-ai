@@ -29,7 +29,13 @@ services:
       - db
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        REACT_APP_KEYCLOAK_URL: ${REACT_APP_KEYCLOAK_URL}
+        REACT_APP_KEYCLOAK_REALM: ${REACT_APP_KEYCLOAK_REALM}
+        REACT_APP_KEYCLOAK_CLIENT_ID: ${REACT_APP_KEYCLOAK_CLIENT_ID}
+        
     image: a2009076370/frontend:latest
     container_name: frontend
     ports:
@@ -59,18 +65,6 @@ services:
     command: start-dev
     volumes:
       - keycloak_data:/opt/keycloak/data
-
-  jenkins:
-    build: ./jenkins #ricardofilipe/jenkins-pd:lts #jenkins/jenkins:lts
-    container_name: jenkins
-    ports:
-      - "8080:8080"
-      - "50000:50000"
-    volumes:
-      - pokecrawler-ai_jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock  # Permite usar Docker no pipeline
-    restart: unless-stopped
-    user: "${UID}:${GID}"  # Usa mesmo UID/GID do host (definido no .env)
 
 volumes:
   postgres_data:
