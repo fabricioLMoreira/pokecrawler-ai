@@ -1,0 +1,3 @@
+frontend_image: "{{ dockerhub_user }}/frontend"
+frontend_ports:
+  - "3000:3000"

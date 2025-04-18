@@ -1,0 +1,6 @@
+- name: Deploy crawler
+  hosts: crawler
+  become: yes
+
+  roles:
+    - role: crawler

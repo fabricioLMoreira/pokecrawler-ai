@@ -1,0 +1,14 @@
+- name: Pull crawler image
+  community.docker.docker_image:
+    name: "{{ crawler_image }}"
+    tag: "{{ dockerhub_tag }}"
+    source: pull
+
+- name: Run backend container
+  community.docker.docker_container:
+    name: crawler
+    image: "{{ crawler_image }}:{{ dockerhub_tag }}"
+    state: started
+    restart_policy: always
+    ports: "{{ crawler_ports }}"
+
