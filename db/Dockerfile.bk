@@ -1,9 +1,0 @@
-FROM postgres:14
-
-ENV POSTGRES_USER=user \
-    POSTGRES_PASSWORD=password \
-    POSTGRES_DB=pokedb
-
-COPY ./init.sql /docker-entrypoint-initdb.d/init.sql
-VOLUME ["/var/lib/postgresql/data"]
-EXPOSE 5432
