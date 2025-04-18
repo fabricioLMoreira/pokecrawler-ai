@@ -1,2 +1,14 @@
 dockerhub_user: flmoreira
 dockerhub_tag: latest
+
+database_host: postgres
+database_port: "5432"
+database_env:
+  POSTGRES_DB: pokecrawlerdb
+  POSTGRES_USER: user
+  POSTGRES_PASSWORD: password
+
+backend_host: "backend"
+backend_port: "8000"
+
+frontend_port: "3000"

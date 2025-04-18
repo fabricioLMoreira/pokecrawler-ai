@@ -1,3 +1,5 @@
 frontend_image: "{{ dockerhub_user }}/frontend"
 frontend_ports:
-  - "3000:3000"
+  - "{{frontend_port}}:{{frontend_port}}"
+
+backend_api_url: "{{backend_host}}:{{backend_port}"

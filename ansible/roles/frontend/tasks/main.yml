@@ -1,0 +1,21 @@
+- name: Pull frontend image
+  community.docker.docker_image:
+    name: "{{ frontend_image }}"
+    tag: "{{ dockerhub_tag }}"
+    source: pull
+
+- name: Run frontend container
+  community.docker.docker_container:
+    name: frontend
+    image: "{{ frontend_image }}:{{ dockerhub_tag }}"
+    state: started
+    restart_policy: always
+    ports: "{{ frontend_ports }}"
+    env:
+      backend_api_url: "{{ backend_host }}:{{backend_port}}"
+    networks:
+      - name: pokecrawler_network
+        aliases:
+          - frontend  # ou qualquer nome que o container do crawler vai usar para resolver a DB
+    networks_cli_compatible: true
+
