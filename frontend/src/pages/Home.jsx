@@ -2,8 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import {
   getAllPokemons,
   getPokemonTypes,
-  deletePokemon,
-  updatePokemon,
+  deletePokemon
 } from "../services/pokemonApi";
 import { AuthContext } from "../context/AuthProvider";
 import Header from "../components/Header/Header";
@@ -25,7 +24,7 @@ const Home = () => {
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -119,9 +118,7 @@ const Home = () => {
     <div className="app-container">
       <Header user={user} onLogout={logout} onLoginClick={login} />
 
-     
-
-
+    
       <main className="main-content">
         <div className="filters-bar">
           <div className="filters-group">
@@ -133,12 +130,6 @@ const Home = () => {
               types={types}
             />
           </div>
-
-          {user && (
-            <button className="add-button" onClick={() => setIsAddModalOpen(true)}>
-              ➕ Adicionar Pokémon
-            </button>
-          )}
         </div>
 
         <PokemonGrid

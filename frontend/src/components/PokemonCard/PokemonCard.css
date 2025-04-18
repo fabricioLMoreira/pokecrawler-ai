@@ -7,7 +7,8 @@
   transition: transform 0.3s ease;
   cursor: pointer;
   border: 3px solid #ffcb05;
-  max-width: 220px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .pokemon-card:hover {
@@ -18,7 +19,7 @@
 .pokemon-type {
   font-size: 12px;
   color: white;
-  background-color: #3b4cca; /* cor azul Pokémon */
+  background-color: #3b4cca;
   padding: 4px 10px;
   border-radius: 20px;
   margin: 2px;

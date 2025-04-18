@@ -13,7 +13,7 @@ const AddPokemonModal = ({ onClose, onAdd, token, types }) => {
 
   const handleSave = async () => {
     if (!name.trim() || !typePrimary.trim() || !url.trim()) {
-      setError("❌ Nome, tipo primário e URL são obrigatórios.");
+      setError("Nome, tipo primário e URL são campos obrigatórios.");
       return;
     }
 
@@ -34,7 +34,7 @@ const AddPokemonModal = ({ onClose, onAdd, token, types }) => {
 
       onAdd(newPokemon);
     } catch (err) {
-      setError("❌ Erro ao adicionar Pokémon.");
+      setError("Erro ao adicionar Pokémon.");
     } finally {
       setIsSaving(false);
     }

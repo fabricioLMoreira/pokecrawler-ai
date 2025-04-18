@@ -15,7 +15,9 @@
   background: linear-gradient(to bottom, #fefefe, #e1e1e1);
   border-radius: 20px;
   width: 350px;
+  max-width: 90vw;
   padding: 25px;
+  margin: 0 16px;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
   position: relative;
   text-align: center;
@@ -65,12 +67,20 @@
   background: #d00000;
 }
 
-.modal-sprite {
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sprite-area {
   width: 180px;
   height: 180px;
-  object-fit: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 20px;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4));
+  position: relative;
 }
 
 .modal-name {
@@ -98,4 +108,127 @@
   font-weight: bold;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   text-transform: capitalize;
+}
+
+.pokeball-loader {
+  width: 100px;
+  height: 100px;
+  animation: spinAndFlash 0.8s ease-out forwards;
+}
+
+@keyframes spinAndFlash {
+  0% {
+    transform: scale(0.5) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+    opacity: 1;
+  }
+}
+
+
+.sprite-area {
+  width: 180px;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.pokeball-loader {
+  width: 100px;
+  height: 100px;
+  animation: spinAndFlash 0.8s ease-out forwards;
+  z-index: 1;
+}
+
+@keyframes spinAndFlash {
+  0% {
+    transform: scale(0.5) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+    opacity: 1;
+  }
+}
+
+.explosion-flash {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, transparent 80%);
+  animation: explodeFlash 0.4s ease-out forwards;
+  z-index: 2;
+}
+
+@keyframes explodeFlash {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.modal-sprite {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 50%;
+  padding: 10px;
+  background: radial-gradient(circle at center, #fff 0%, #ffcb05 40%, transparent 70%);
+  box-shadow:
+    0 0 20px rgba(255, 203, 5, 0.6),
+    0 0 40px rgba(42, 117, 187, 0.3);
+  animation: appearFromBall 0.6s ease-out;
+  z-index: 1;
+}
+
+@keyframes appearFromBall {
+  0% {
+    transform: scale(0.4) rotate(10deg);
+    opacity: 0;
+    filter: blur(4px);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-card {
+    width: 100%;
+    margin: 0 12px;
+    padding: 20px;
+  }
+
+  .modal-sprite {
+    width: 140px;
+    height: 140px;
+  }
+
+  .modal-name {
+    font-size: 20px;
+  }
 }

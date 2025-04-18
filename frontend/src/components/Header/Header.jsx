@@ -11,7 +11,7 @@ const Header = () => {
     <header className="app-header">
       <div className="header-content">
         <img src={pokeball} alt="Pokéball" className="header-icon" />
-        <h1>Pokecrawler - V.0.0.8 Beta</h1>
+        <h1>Pokecrawler</h1>
 
         <div className="header-user-info">
           {user ? (
@@ -20,7 +20,7 @@ const Header = () => {
               <button onClick={logout}>Logout</button>
             </>
           ) : (
-            <button onClick={login}>Entrar</button>
+            <button onClick={login}>Login</button>
           )}
         </div>
       </div>

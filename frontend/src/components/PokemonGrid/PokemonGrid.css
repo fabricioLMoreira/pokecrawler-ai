@@ -1,15 +1,38 @@
-
 .pokemon-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(216px, 1fr));
   gap: 20px;
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+@media (max-width: 480px) {
+  .pokemon-grid {
+    padding: 16px;
+    gap: 16px;
+  }
 
-/* Card básico */
+  .pokemon-card {
+    padding: 14px;
+  }
+
+  .pokemon-sprite img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .pokemon-type {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  .card-actions button {
+    font-size: 16px;
+    padding: 3px;
+  }
+}
+
 .pokemon-card {
   background: white;
   border-radius: 12px;
@@ -23,20 +46,17 @@
   z-index: 1;
 }
 
-/* Hover 3D tilt */
 .pokemon-card:hover {
   transform: scale(1.05) rotateX(4deg) rotateY(2deg);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Card ativo (clicado) */
 .pokemon-card.active {
   transform: scale(1.12) rotateX(0deg) rotateY(0deg);
   z-index: 10;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
-/* Imagem */
 .pokemon-sprite {
   width: 100px;
   height: 100px;
@@ -51,7 +71,6 @@
   object-fit: contain;
 }
 
-/* Tipos */
 .pokemon-type {
   background: #2a75bb;
   color: white;
@@ -60,6 +79,7 @@
   margin: 2px;
   font-size: 12px;
   font-weight: bold;
+  text-transform: capitalize;
 }
 
 .pokemon-card-wrapper {
@@ -91,4 +111,11 @@
 
 .delete-icon {
   color: #d9534f;
+}
+
+@media (max-width: 480px) {
+  .pokemon-grid {
+    padding: 12px;
+    gap: 16px;
+  }
 }
