@@ -1,4 +1,4 @@
-database_image: postgres
+database_image: "postgres:14"
 database_ports:
   - "5432:5432"
 database_env:
