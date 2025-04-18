@@ -1,3 +1,14 @@
+- name: Gerar .env para o crawler
+  copy:
+    dest: /opt/pokecrawler/.env
+    content: |
+      POSTGRES_DB={{ database_env.POSTGRES_DB }}
+      POSTGRES_USER={{ database_env.POSTGRES_USER }}
+      POSTGRES_PASSWORD={{ database_env.POSTGRES_PASSWORD }}
+      POSTGRES_HOST={{ database_host }}
+      POSTGRES_PORT={{ database_port }}
+    mode: '0640'
+
 - name: Pull crawler image
   community.docker.docker_image:
     name: "{{ crawler_image }}"

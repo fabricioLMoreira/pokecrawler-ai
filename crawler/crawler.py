@@ -2,6 +2,9 @@ import requests
 import datetime
 import psycopg2
 import logging
+from dotenv import load_dotenv
+import os
+load_dotenv("/opt/pokecrawler/.env")
 
 BASE_URL = "https://pokeapi.co/api/v2"
 
@@ -77,11 +80,11 @@ def insert_pokemon_data(pokemons):
     try:
         # Establish database connection
         conn = psycopg2.connect(
-            dbname="pokedb",
-            user="user",
-            password="password",
-            host="pokecrawler-ai-db-1",
-            port="5432"
+            dbname=os.getenv("POSTGRES_DB"),
+            user=os.getenv("POSTGRES_USER"),
+            password=os.getenv("POSTGRES_PASSWORD"),
+            host=os.getenv("POSTGRES_HOST"),
+            port=os.getenv("POSTGRES_PORT")
         )
         cur = conn.cursor()
 
