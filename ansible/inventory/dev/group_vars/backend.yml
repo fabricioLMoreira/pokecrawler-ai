@@ -1,0 +1,3 @@
+backend_image: "{{ dockerhub_user }}/backend"
+backend_ports:
+  - "8000:8000"

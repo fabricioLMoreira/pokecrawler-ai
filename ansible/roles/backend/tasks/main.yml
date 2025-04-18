@@ -1,0 +1,13 @@
+- name: Pull backend image
+  community.docker.docker_image:
+    name: "{{ backend_image }}"
+    tag: "{{ dockerhub_tag }}"
+    source: pull
+
+- name: Run backend container
+  community.docker.docker_container:
+    name: backend
+    image: "{{ backend_image }}:{{ dockerhub_tag }}"
+    state: started
+    restart_policy: always
+    ports: "{{ backend_ports }}"

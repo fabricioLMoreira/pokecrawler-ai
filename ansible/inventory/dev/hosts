@@ -1,0 +1,18 @@
+[local]
+localhost ansible_connection=local
+
+[crawler]
+localhost ansible_connection=local
+
+[backend]
+localhost ansible_connection=local
+
+[frontend]
+localhost ansible_connection=local
+
+[database]
+localhost ansible_connection=local
+
+[keycloak]
+localhost ansible_connection=local
+

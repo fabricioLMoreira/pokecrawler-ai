@@ -1,0 +1,22 @@
+- name: Copy init.sql to host
+  copy:
+    src: init.sql
+    dest: /tmp/init.sql
+    mode: '0644'
+
+- name: Pull Postgres image
+  community.docker.docker_image:
+    name: "{{ database_image }}"
+    tag: "{{ dockerhub_tag }}"
+    source: pull
+
+- name: Run Postgres container
+  community.docker.docker_container:
+    name: postgres
+    image: "{{ database_image }}"
+    state: started
+    restart_policy: always
+    ports: "{{ database_ports }}"
+    env: "{{ database_env }}"
+    volumes:
+          - /tmp/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
