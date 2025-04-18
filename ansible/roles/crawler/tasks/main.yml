@@ -4,7 +4,7 @@
     tag: "{{ dockerhub_tag }}"
     source: pull
 
-- name: Run backend container
+- name: Run crawler container
   community.docker.docker_container:
     name: crawler
     image: "{{ crawler_image }}:{{ dockerhub_tag }}"
