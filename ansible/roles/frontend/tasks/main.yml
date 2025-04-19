@@ -12,7 +12,7 @@
     restart_policy: always
     ports: "{{ frontend_ports }}"
     env:
-     VITE_API_URL: "{{ backend_host }}:{{backend_port}}"
+     VITE_API_URL: "{{backend_api_url}}"
     networks:
       - name: pokecrawler_network
         aliases:
