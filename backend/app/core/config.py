@@ -6,7 +6,7 @@
 import os
 
 # dominios permitidos
-ALLOWED_ORIGINS = os.getenv("http://localhost:3000,http://127.0.0.1:3000").split(",")
+ALLOWED_ORIGINS = "http://localhost:3000"
 
 # Obtem as credenciais da DB do ambiente
 DB_USER = os.getenv("POSTGRES_USER")

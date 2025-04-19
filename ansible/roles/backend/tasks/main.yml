@@ -20,6 +20,6 @@
     networks:
       - name: pokecrawler_network
         aliases:
-          - backend  # ou qualquer nome que o container do crawler vai usar para resolver a DB
+          - backend
     networks_cli_compatible: true
 
