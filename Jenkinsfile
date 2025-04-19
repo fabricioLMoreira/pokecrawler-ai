@@ -92,7 +92,7 @@ pipeline {
              steps {
         	dir('ansible') {
                     echo 'Executando o Ansible Playbook...'
-                    sh 'ansible-playbook -i inventory/hosts playbooks/site.yml'
+                    sh 'ansible-playbook playbooks/site.yml'
            	}
              }
    	}

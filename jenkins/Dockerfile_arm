@@ -8,6 +8,15 @@ RUN mkdir -p /tmp/download && \
  rm -rf /tmp/download && \
  groupadd -g 999 docker && \
  usermod -aG staff,docker jenkins
- 
+
+#Install Ansible
+RUN apt-get update && \
+    apt-get install -y python3-pip python3-venv python3-docker && \
+    python3 -m venv /opt/ansible-venv && \
+    /opt/ansible-venv/bin/pip install ansible && \
+    /opt/ansible-venv/bin/ansible-galaxy collection install community.docker && \
+    ln -s /opt/ansible-venv/bin/ansible /usr/local/bin/ansible && \
+    ln -s /opt/ansible-venv/bin/ansible-playbook /usr/local/bin/ansible-playbook && \
+    apt-get clean
 
 USER jenkins
