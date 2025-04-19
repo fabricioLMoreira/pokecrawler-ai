@@ -1,6 +1,7 @@
-keycloak_image: quay.io/keycloak/keycloak
+keycloak_image: "keycloak/keycloak:26.1.4"
 keycloak_ports:
-  - "8080:8080"
+  - "8180:8080"
 keycloak_env:
   KEYCLOAK_ADMIN: admin
   KEYCLOAK_ADMIN_PASSWORD: admin
+

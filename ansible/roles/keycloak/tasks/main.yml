@@ -1,9 +1,10 @@
 - name: Run Keycloak container
   community.docker.docker_container:
     name: keycloak
-      image: "{{ keycloak_image }}"
-      state: started
-      restart_policy: always
-      ports: "{{ keycloak_ports }}"
-      env: "{{ keycloak_env }}"
-
+    image: "{{ keycloak_image }}"
+    state: started
+    restart_policy: always
+    ports: "{{ keycloak_ports }}"
+    env: "{{ keycloak_env }}"
+    volumes:
+          - "keycloak_data:/opt/keycloak/data"
