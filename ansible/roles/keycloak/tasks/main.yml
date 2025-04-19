@@ -14,3 +14,99 @@
 
     volumes:
           - "keycloak_data:/opt/keycloak/data"
+
+- name: Esperar que o Keycloak esteja disponível na porta 8180
+  wait_for:
+    host: "localhost"
+    port: 8180
+    delay: 2       # espera 2 segundos antes de começar
+    timeout: 60    # espera até 60 segundos
+    state: started
+
+- name: Create realm via Keycloak REST API
+  uri:
+    url: "http://localhost:8180/realms/master/protocol/openid-connect/token"
+    method: POST
+    body:
+      grant_type: password
+      client_id: admin-cli
+      username: admin
+      password: admin
+    body_format: form-urlencoded
+    return_content: yes
+  register: keycloak_token
+
+- name: Create pokecrawler realm
+  uri:
+    url: "http://localhost:8180/admin/realms"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ keycloak_token.json.access_token }}"
+      Content-Type: "application/json"
+    body: |
+      {
+        "realm": "pokecrawler",
+        "enabled": true
+      }
+    status_code: 201
+
+- name: Criar client "frontend-client" no realm "pokecrawler"
+  uri:
+    url: "http://localhost:8180/admin/realms/pokecrawler/clients"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ keycloak_token.json.access_token }}"
+      Content-Type: "application/json"
+    body_format: json
+    body:
+      clientId: "frontend-client"
+      enabled: true
+      publicClient: true
+      redirectUris:
+        - "http://localhost:3000/*"
+      webOrigins:
+        - "http://localhost:3000"
+      directAccessGrantsEnabled: true
+      protocol: "openid-connect"
+    status_code: 201
+
+- name: Criar user "ash" no realm "pokecrawler"
+  uri:
+    url: "http://localhost:8180/admin/realms/pokecrawler/users"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ keycloak_token.json.access_token }}"
+      Content-Type: "application/json"
+    body_format: json
+    body:
+      username: "ash"
+      enabled: true
+      emailVerified: true
+      firstName: "Ash"
+      lastName: "Ketchum"
+      email: "ash@pokecrawler.com"
+    status_code: 201
+
+- name: Buscar user_id do "ash"
+  uri:
+    url: "http://localhost:8180/admin/realms/pokecrawler/users?username=ash"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ keycloak_token.json.access_token }}"
+    return_content: yes
+  register: keycloak_users
+
+- name: Definir password do user "ash"
+  uri:
+    url: "http://localhost:8180/admin/realms/pokecrawler/users/{{ keycloak_users.json[0].id }}/reset-password"
+    method: PUT
+    headers:
+      Authorization: "Bearer {{ keycloak_token.json.access_token }}"
+      Content-Type: "application/json"
+    body_format: json
+    body:
+      type: "password"
+      temporary: false
+      value: "pikachu123"
+    status_code: 204
+
