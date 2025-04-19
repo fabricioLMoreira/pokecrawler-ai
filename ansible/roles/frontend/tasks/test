@@ -1,0 +1,44 @@
+- name: Pull frontend image
+  community.docker.docker_image:
+    name: "{{ frontend_image }}"
+    tag: "{{ dockerhub_tag }}"
+    source: pull
+
+- name: Generate .env from template
+  template:
+    src: .env.j2
+    dest: "{{ role_path }}/build/.env"
+    mode: "0644"
+
+- name: Copy Dockerfile file to build
+  copy:
+    src: "{{ role_path }}/files/Dockerfile"
+    dest: "{{ role_path }}/build/Dockerfile"
+    mode: "0644"
+
+- name: Build frontend with .env
+  community.docker.docker_image:
+    name: "test"
+    tag: "{{ dockerhub_tag }}"
+    source: build
+    build:
+      path: "{{ role_path }}/build"
+      dockerfile: Dockerfile
+
+- name: Delete build Dockerfile
+  file:
+    path: "{{ role_path }}/build/Dockerfile"
+    state: absent
+
+- name: Run frontend container
+  community.docker.docker_container:
+    name: frontend
+    image: "test:{{ dockerhub_tag }}"
+    state: started
+    restart_policy: always
+    ports: "{{ frontend_ports }}"
+    networks:
+      - name: pokecrawler_network
+        aliases:
+          - frontend
+    networks_cli_compatible: true

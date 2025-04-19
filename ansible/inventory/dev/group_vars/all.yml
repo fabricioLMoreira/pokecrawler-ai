@@ -12,3 +12,7 @@ backend_host: "backend"
 backend_port: "8000"
 
 frontend_port: "3000"
+
+keycloak_host: "keycloak"
+keycloak_realm: "pokecrawler"
+keycloak_client_id: "frontend-client"

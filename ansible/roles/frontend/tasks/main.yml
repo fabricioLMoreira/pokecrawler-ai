@@ -7,15 +7,12 @@
 - name: Run frontend container
   community.docker.docker_container:
     name: frontend
-    image: "{{ frontend_image }}:{{ dockerhub_tag }}"
+    image: "test:{{ dockerhub_tag }}"
     state: started
     restart_policy: always
     ports: "{{ frontend_ports }}"
-    env:
-     VITE_API_URL: "{{backend_api_url}}"
     networks:
       - name: pokecrawler_network
         aliases:
-          - frontend  # ou qualquer nome que o container do crawler vai usar para resolver a DB
+          - frontend
     networks_cli_compatible: true
-
