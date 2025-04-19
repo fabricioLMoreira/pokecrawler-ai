@@ -17,5 +17,5 @@
     networks:
       - name: pokecrawler_network
         aliases:
-          - postgres  # ou qualquer nome que o container do crawler vai usar para resolver a DB
+          - postgres
     networks_cli_compatible: true

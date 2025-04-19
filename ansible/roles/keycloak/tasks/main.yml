@@ -6,5 +6,11 @@
     restart_policy: always
     ports: "{{ keycloak_ports }}"
     env: "{{ keycloak_env }}"
+    command: start-dev
+    networks:
+      - name: pokecrawler_network
+        aliases:
+          - keycloak  # ou qualquer nome que o container do crawler vai usar para resolver a DB
+
     volumes:
           - "keycloak_data:/opt/keycloak/data"
