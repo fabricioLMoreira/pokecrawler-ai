@@ -7,7 +7,7 @@
 - name: Run frontend container
   community.docker.docker_container:
     name: frontend
-    image: "test:{{ dockerhub_tag }}"
+    image: "{{ frontend_image }}:{{ dockerhub_tag }}"
     state: started
     restart_policy: always
     ports: "{{ frontend_ports }}"
