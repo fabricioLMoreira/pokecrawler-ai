@@ -1,0 +1,5 @@
+- name: Deploy ngrok
+  hosts: local
+
+  roles:
+    - role: ngrok
