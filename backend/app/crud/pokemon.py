@@ -5,7 +5,7 @@
 # Esta camada abstrai o acesso ao banco de dados e é usada nos routers.
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
+from sqlalchemy.future import select, asc
 from db.models import Pokemon
 from schemas.pokemon import PokemonCreate, PokemonUpdate
 
