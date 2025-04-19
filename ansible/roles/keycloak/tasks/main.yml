@@ -15,13 +15,23 @@
     volumes:
           - "keycloak_data:/opt/keycloak/data"
 
-- name: Esperar que o Keycloak esteja disponível na porta 8180
+- name: wait Keycloak (Jenkins)
   wait_for:
-    host: "localhost"
-    port: 8180
-    delay: 2       # espera 2 segundos antes de começar
-    timeout: 60    # espera até 60 segundos
+    host: keycloak
+    port: 8080
+    delay: 2
+    timeout: 60
     state: started
+  when: jenkins | default(false) | bool
+
+- name: wai Keycloak (Local)
+  wait_for:
+    host: localhost
+    port: 8180
+    delay: 2
+    timeout: 60
+    state: started
+  when: not (jenkins | default(false) | bool)
 
 - name: Create realm via Keycloak REST API
   uri:

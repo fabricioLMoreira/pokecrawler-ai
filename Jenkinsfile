@@ -78,21 +78,11 @@ pipeline {
             }
         }
 
-        // stage('Simular Erro') {
-        //     steps {
-        //         echo '💣 A simular falha na pipeline...'
-        //         sh 'exit 1'
-        //     }
-        // }
-
-        // Adicionar o stage para executar o Ansible Playbook
-    
-
 	stage('Run Ansible Playbook') {
              steps {
         	dir('ansible') {
                     echo 'Executando o Ansible Playbook...'
-                    sh 'ansible-playbook playbooks/site.yml'
+                    sh 'ansible-playbook playbooks/site.yml --extra-vars "jenkins=true"'
            	}
              }
    	}
