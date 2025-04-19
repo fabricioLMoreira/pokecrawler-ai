@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_API_URL = "http://backend:8080";
+const BASE_API_URL = "http://backend:8000";
 
 const POKEMON_URL = `${BASE_API_URL}/v1/pokemons`;
 
