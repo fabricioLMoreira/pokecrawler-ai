@@ -11,7 +11,7 @@ from schemas.pokemon import PokemonCreate, PokemonUpdate
 
 # Get todos os pokémon na base de dados
 async def get_all_pokemons(db: AsyncSession):
-    result = await db.execute(select(Pokemon))
+    result = await db.execute(select(Pokemon).order_by(asc(Pokemon.id)))
     return result.scalars().all()
 
 # Get um pokémon por ID
