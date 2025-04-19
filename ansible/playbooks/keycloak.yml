@@ -1,6 +1,5 @@
 - name: Deploy Keycloak
   hosts: dev
-  become: true
   tasks:
     - name: Run Keycloak container
       community.docker.docker_container:

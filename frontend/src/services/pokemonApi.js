@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_API_URL = import.meta.env.backend_api_url;
+const BASE_API_URL = import.meta.env.VITE_API_URL;
 
 //const BASE_API_URL = "http://{{backend_host}}:{{backend_port}}";
 const POKEMON_URL = `${BASE_API_URL}/v1/pokemons`;
