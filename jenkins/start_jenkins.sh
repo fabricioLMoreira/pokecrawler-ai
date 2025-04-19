@@ -1,1 +1,1 @@
-docker run --privileged -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --group-add $(stat -c '%g' /var/run/docker.sock) --name jenkins -d my_jenkins
+docker run --privileged -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --group-add $(stat -c '%g' /var/run/docker.sock) --net pokecrawler_network --net-alias jenkins  --name jenkins -d my_jenkins

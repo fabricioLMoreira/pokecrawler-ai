@@ -13,6 +13,9 @@ backend_port: "8000"
 
 frontend_port: "3000"
 
-keycloak_host: "keycloak"
+keycloak_host: "localhost"
+keycloak_port: "8180"
 keycloak_realm: "pokecrawler"
 keycloak_client_id: "frontend-client"
+
+

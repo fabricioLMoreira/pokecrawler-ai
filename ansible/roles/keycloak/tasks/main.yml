@@ -15,27 +15,22 @@
     volumes:
           - "keycloak_data:/opt/keycloak/data"
 
-- name: wait Keycloak (Jenkins)
-  wait_for:
-    host: keycloak
-    port: 8080
-    delay: 2
-    timeout: 60
-    state: started
-  when: jenkins | default(false) | bool
+- name: Definir Keycloak host and port if Jenkins or local
+  set_fact:
+    keycloak_host: "{{ 'keycloak' if jenkins | default(false) else keycloak_host }}"
+    keycloak_port: "{{ 8080 if jenkins | default(false) else keycloak_port }}"
 
-- name: wai Keycloak (Local)
+- name: Esperar que o Keycloak esteja disponível
   wait_for:
-    host: localhost
-    port: 8180
+    host: "{{ keycloak_host }}"
+    port: "{{ keycloak_port }}"
     delay: 2
     timeout: 60
     state: started
-  when: not (jenkins | default(false) | bool)
 
 - name: Create realm via Keycloak REST API
   uri:
-    url: "http://localhost:8180/realms/master/protocol/openid-connect/token"
+    url: "http://{{ keycloak_host }}:{{ keycloak_port }}/realms/master/protocol/openid-connect/token"
     method: POST
     body:
       grant_type: password
@@ -48,7 +43,7 @@
 
 - name: Create pokecrawler realm
   uri:
-    url: "http://localhost:8180/admin/realms"
+    url: "http://{{ keycloak_host }}:{{ keycloak_port }}/admin/realms"
     method: POST
     headers:
       Authorization: "Bearer {{ keycloak_token.json.access_token }}"
@@ -62,7 +57,7 @@
 
 - name: Criar client "frontend-client" no realm "pokecrawler"
   uri:
-    url: "http://localhost:8180/admin/realms/pokecrawler/clients"
+    url: "http://{{ keycloak_host }}:{{ keycloak_port }}/admin/realms/pokecrawler/clients"
     method: POST
     headers:
       Authorization: "Bearer {{ keycloak_token.json.access_token }}"
@@ -82,7 +77,7 @@
 
 - name: Criar user "ash" no realm "pokecrawler"
   uri:
-    url: "http://localhost:8180/admin/realms/pokecrawler/users"
+    url: "http://{{ keycloak_host }}:{{ keycloak_port }}/admin/realms/pokecrawler/users"
     method: POST
     headers:
       Authorization: "Bearer {{ keycloak_token.json.access_token }}"
@@ -99,7 +94,7 @@
 
 - name: Buscar user_id do "ash"
   uri:
-    url: "http://localhost:8180/admin/realms/pokecrawler/users?username=ash"
+    url: "http://{{ keycloak_host }}:{{ keycloak_port }}/admin/realms/pokecrawler/users?username=ash"
     method: GET
     headers:
       Authorization: "Bearer {{ keycloak_token.json.access_token }}"
@@ -108,7 +103,7 @@
 
 - name: Definir password do user "ash"
   uri:
-    url: "http://localhost:8180/admin/realms/pokecrawler/users/{{ keycloak_users.json[0].id }}/reset-password"
+    url: "http://{{ keycloak_host }}:{{ keycloak_port }}/admin/realms/pokecrawler/users/{{ keycloak_users.json[0].id }}/reset-password"
     method: PUT
     headers:
       Authorization: "Bearer {{ keycloak_token.json.access_token }}"
