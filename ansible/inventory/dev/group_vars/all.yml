@@ -1,4 +1,4 @@
-dockerhub_user: flmoreira
+dockerhub_user: a2009076370
 dockerhub_tag: latest
 
 database_host: postgres
