@@ -53,7 +53,7 @@
         "realm": "pokecrawler",
         "enabled": true
       }
-    status_code: 201
+    status_code: [201,409]
 
 - name: Criar client "frontend-client" no realm "pokecrawler"
   uri:
@@ -73,7 +73,7 @@
         - "http://localhost:3000"
       directAccessGrantsEnabled: true
       protocol: "openid-connect"
-    status_code: 201
+    status_code: [201,409]
 
 - name: Criar user "ash" no realm "pokecrawler"
   uri:
@@ -90,7 +90,7 @@
       firstName: "Ash"
       lastName: "Ketchum"
       email: "ash@pokecrawler.com"
-    status_code: 201
+    status_code: [201,409]
 
 - name: Buscar user_id do "ash"
   uri:
