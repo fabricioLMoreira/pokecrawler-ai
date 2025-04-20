@@ -1,0 +1,15 @@
+.type-indicators {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+  }
+  
+  .type-count {
+    background: #dbeafe;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #1e3a8a;
+  }
+  

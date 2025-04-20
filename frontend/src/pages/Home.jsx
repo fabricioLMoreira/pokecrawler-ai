@@ -12,6 +12,7 @@ import PokemonGrid from "../components/PokemonGrid/PokemonGrid";
 import PokemonModal from "../components/PokemonModal/PokemonModal";
 import EditPokemonModal from "../components/EditPokemonModal/EditPokemonModal";
 import AddPokemonModal from "../components/AddPokemonModal/AddPokemonModal";
+import TypeIndicators from "../components/TypeIndicators/TypeIndicators";
 import Loading from "../components/Loading/Loading";
 import "./Home.css";
 
@@ -45,6 +46,7 @@ const Home = () => {
 
   useEffect(() => {
     const results = pokemons.filter((p) => {
+
       const termo = search.toLowerCase();
 
       const matchesName = p.name.toLowerCase().includes(termo);
@@ -64,6 +66,16 @@ const Home = () => {
     setFilteredPokemons(results);
     setCurrentPage(1);
   }, [search, typeFilter, pokemons]);
+
+  // 👉 Contador de pokémons por tipo (baseado nos filtros)
+  const typeCounts = {};
+  filteredPokemons.forEach(p => {
+    const types = [p.type_primary, p.type_secondary].filter(Boolean);
+    types.forEach(type => {
+      const lowerType = type.toLowerCase();
+      typeCounts[lowerType] = (typeCounts[lowerType] || 0) + 1;
+    });
+  });
 
   const totalPages = Math.ceil(filteredPokemons.length / itemsPerPage);
   const indexOfLast = currentPage * itemsPerPage;
@@ -118,7 +130,6 @@ const Home = () => {
     <div className="app-container">
       <Header user={user} onLogout={logout} onLoginClick={login} />
 
-    
       <main className="main-content">
         <div className="filters-bar">
           <div className="filters-group">
@@ -131,6 +142,9 @@ const Home = () => {
             />
           </div>
         </div>
+
+        {/* Indicador de tipo selecionado (aparece apenas com filtro) */}
+        <TypeIndicators pokemons={filteredPokemons} typeFilter={typeFilter} />
 
         <PokemonGrid
           pokemons={currentPokemons}

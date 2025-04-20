@@ -40,3 +40,17 @@ h1 {
     transform: translateY(-1px);
   }
   
+  .type-indicators {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 0;
+  }
+  
+  .type-count {
+    background: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-weight: 500;
+  }
+  
