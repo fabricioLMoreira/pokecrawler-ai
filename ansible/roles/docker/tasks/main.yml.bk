@@ -1,0 +1,22 @@
+- name: Instalar Docker (via script oficial da Docker) — compatível com ARM
+  shell: curl -fsSL https://get.docker.com | sh
+  register: docker_install
+  changed_when: "'Docker is already installed' not in docker_install.stdout or docker_install.rc != 0"
+  args:
+    executable: /bin/bash
+
+- name: Ver output da instalação do Docker (debug opcional)
+  debug:
+    var: docker_install.stdout
+
+- name: Garantir que o serviço Docker está ativo e habilitado
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Adicionar utilizador atual ao grupo docker
+  user:
+    name: "{{ ansible_user | default('jenkins') }}"
+    groups: docker
+    append: yes

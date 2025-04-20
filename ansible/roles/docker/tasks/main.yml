@@ -1,0 +1,29 @@
+- name: Instalar Docker em Debian (x86_64)
+  apt:
+    name: docker.io
+    state: present
+  when:
+    - ansible_architecture == "x86_64"
+    - ansible_os_family == "Debian"
+
+- name: Instalar Docker via script oficial (ARM ou outras arch)
+  shell: curl -fsSL https://get.docker.com | sh
+  register: docker_install
+  args:
+    executable: /bin/bash
+  changed_when: "'Docker is already installed' not in docker_install.stdout"
+  when:
+    - ansible_architecture != "x86_64"
+    - ansible_os_family == "Debian"
+
+- name: Adicionar utilizador ao grupo docker
+  user:
+    name: "{{ ansible_user | default('jenkins') }}"
+    groups: docker
+    append: yes
+
+- name: Garantir que o Docker está ativo
+  service:
+    name: docker
+    state: started
+    enabled: true

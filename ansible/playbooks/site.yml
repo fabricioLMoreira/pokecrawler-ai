@@ -1,3 +1,7 @@
+- name: Definir utilizador DockerHub dependendo da arquitetura
+  set_fact:
+    dockerhub_user: "{{ 'flmoreira' if ansible_architecture in ['aarch64', 'armv7l'] else 'a2009076370' }}"
+
 - import_playbook: database.yml
 - import_playbook: keycloak.yml
 - import_playbook: crawler.yml
