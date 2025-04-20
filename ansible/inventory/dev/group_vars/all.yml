@@ -18,4 +18,4 @@ keycloak_port: "8180"
 keycloak_realm: "pokecrawler"
 keycloak_client_id: "frontend-client"
 
-
+jenkins_port: 8080

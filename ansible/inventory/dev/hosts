@@ -16,3 +16,6 @@ localhost ansible_connection=local
 [keycloak]
 localhost ansible_connection=local
 
+[ngrok]
+localhost ansible_connection=local
+

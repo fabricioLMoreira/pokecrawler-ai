@@ -1,5 +1,7 @@
 - name: Deploy ngrok
-  hosts: local
+  hosts: ngrok
+  vars_files:
+    - ../secrets/secrets.yml
 
   roles:
     - role: ngrok

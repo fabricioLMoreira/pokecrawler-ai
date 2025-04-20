@@ -1,30 +1,36 @@
 - name: Add ngrok GPG key
-  ansible.builtin.shell: |
-    curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc | tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null
-  args:
-    warn: false
+  apt_key:
+    url: https://ngrok-agent.s3.amazonaws.com/ngrok.asc
+    state: present
 
-- name: Add ngrok APT repository
-  ansible.builtin.shell: |
-    echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | tee /etc/apt/sources.list.d/ngrok.list
-  args:
-    warn: false
+- name: Add ngrok repository
+  apt_repository:
+    repo: 'deb https://ngrok-agent.s3.amazonaws.com buster main'
+    state: present
+    filename: 'ngrok'
 
-- name: Update APT cache
-  ansible.builtin.apt:
+- name: Update apt cache
+  become: yes
+  apt:
     update_cache: yes
 
 - name: Install ngrok
-  ansible.builtin.apt:
+  apt:
     name: ngrok
     state: present
 
-- name: Add ngrok authtoken
-  ansible.builtin.shell: "ngrok config add-authtoken {{ ngrok_authtoken }}"
-  environment:
-    HOME: "/home/{{ ansible_user }}"  # Diretório home do usuário que executa o Ansible
+- name: Check if ngrok is installed
+  command: ngrok version
+  register: ngrok_installed
+  ignore_errors: yes
 
-- name: Run ngrok tunnel in background
-  ansible.builtin.shell: "nohup ngrok http --domain={{ ngrok_domain }} 8080 > /var/log/ngrok.log 2>&1 &"
-  args:
-    warn: false
+- name: Add ngrok authtoken
+  command: ngrok config add-authtoken {{ ngrok_auth_token }}
+  when: ngrok_installed.stdout != ''  # Verifica se o ngrok está instalado
+
+- name: Start ngrok tunnel
+  command: ngrok http --url=humane-sharp-teal.ngrok-free.app 8080 
+  async: 60  # Duração do processo em segundos
+  poll: 0  # Não espera até o término da execução, retorna imediatamente
+  register: ngrok_process
+
