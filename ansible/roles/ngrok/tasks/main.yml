@@ -34,11 +34,3 @@
   poll: 0
   register: ngrok_process
 
-- name: Check if ngrok is running
-  shell: pgrep -af ngrok || echo "ngrok is not running"
-  register: ngrok_running
-  ignore_errors: yes
-
-- name: Print ngrok status
-  debug:
-    msg: "{{ ngrok_running.stdout }}"

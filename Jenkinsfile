@@ -98,19 +98,14 @@ pipeline {
 
     post {
         failure {
-		emailtext(
-			to: "${EMAIL_TO}",
-                	subject: "🚨 Falha na Pipeline: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                	body: """A pipeline falhou no stage: ${env.STAGE_NAME}
+		mail to: "${EMAIL_TO}",
+                subject: "🚨 Falha na Pipeline: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """A pipeline falhou no stage: ${env.STAGE_NAME}
 
-                	🔍 Verifica os logs aqui: ${env.BUILD_URL}
+                🔍 Verifica os logs aqui: ${env.BUILD_URL}
 
-	                Commit: ${env.GIT_COMMIT}
-        	        Autor: ${env.COMMIT_AUTHOR}
-                	"""
-		)
-
-
+	        Commit: ${env.GIT_COMMIT}
+        	Autor: ${env.COMMIT_AUTHOR}"""
 	}
         success {
             echo 'Pipeline concluída com sucesso!'
