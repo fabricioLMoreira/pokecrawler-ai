@@ -151,17 +151,7 @@ ansible-playbook playbooks/database.yml
 
 > Update `init.sql` if schema changes, and **redeploy the database service** to apply changes.
 
-Inside the `jenkins` folder is provided a `Dockerfile` that can be used to build a jenkins image
-```bash
-docker build -t my_jenkins .
-```
-And a script `start_ansible.sh` is used to run a container using the my_jenkins image
-```bash
-sh start_jenkins.sh
-```
-The jenkins dashboard shall be available at localhost:8080.
 
-The repo includes a `Jenkinsfile` that can be used to build the project and push new images based on the source code. Create a new pipeline, then "Pipeline script from SCM", add the url to your pokecrawler repository, and "Jenkinsfile" in the "Script Path"
 
 ---
 
