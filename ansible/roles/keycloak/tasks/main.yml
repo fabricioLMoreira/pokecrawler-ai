@@ -35,8 +35,8 @@
     body:
       grant_type: password
       client_id: admin-cli
-      username: admin
-      password: admin
+      username: "{{ keycloak_env.KEYCLOAK_ADMIN }}"
+      password: "{{ keycloak_env.KEYCLOAK_ADMIN_PASSWORD }}"
     body_format: form-urlencoded
     return_content: yes
   register: keycloak_token
@@ -48,14 +48,13 @@
     headers:
       Authorization: "Bearer {{ keycloak_token.json.access_token }}"
       Content-Type: "application/json"
-    body: |
-      {
-        "realm": "pokecrawler",
-        "enabled": true
-      }
+    body:
+      realm: "{{ keycloak_realm }}"
+      enabled: true
+    body_format: json
     status_code: [201,409]
 
-- name: Criar client "frontend-client" no realm "pokecrawler"
+- name: Create keycloak client-id
   uri:
     url: "http://{{ keycloak_host }}:{{ keycloak_port }}/admin/realms/pokecrawler/clients"
     method: POST
@@ -64,13 +63,13 @@
       Content-Type: "application/json"
     body_format: json
     body:
-      clientId: "frontend-client"
+      clientId: "{{ keycloak_client_id }}"
       enabled: true
       publicClient: true
       redirectUris:
-        - "http://localhost:3000/*"
+        - "http://{{ frontend_host }}:{{ frontend_port }}/*"
       webOrigins:
-        - "http://localhost:3000"
+        - "http://{{ frontend_host }}:{{ frontend_port }}"
       directAccessGrantsEnabled: true
       protocol: "openid-connect"
     status_code: [201,409]
@@ -84,12 +83,12 @@
       Content-Type: "application/json"
     body_format: json
     body:
-      username: "ash"
+      username: "{{ keycloak_username }}"
       enabled: true
       emailVerified: true
-      firstName: "Ash"
-      lastName: "Ketchum"
-      email: "ash@pokecrawler.com"
+      firstName: "{{ keycloak_user_firstname }}"
+      lastName: "{{ keycloak_user_lastname }}"
+      email: "{{ keycloak_user_email }}"
     status_code: [201,409]
 
 - name: Buscar user_id do "ash"
@@ -112,6 +111,6 @@
     body:
       type: "password"
       temporary: false
-      value: "pikachu123"
+      value: "{{ keycloak_user_pass }}"
     status_code: 204
 

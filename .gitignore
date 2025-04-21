@@ -33,3 +33,6 @@ jenkins_home/
 # ⚙️ Ignorar arquivos de cache do Git
 .git/
 .env
+
+# Ignorar ansible secrets
+ansible/secrets/

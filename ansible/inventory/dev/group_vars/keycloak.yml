@@ -1,7 +1,16 @@
-keycloak_image: "keycloak/keycloak:26.1.4"
+keycloak_version: "26.1.4"
+keycloak_image: "keycloak/keycloak:{{ keycloak_version }}"
 keycloak_ports:
-  - "8180:8080"
+  - "{{ keycloak_port }}:8080"
 keycloak_env:
   KEYCLOAK_ADMIN: admin
   KEYCLOAK_ADMIN_PASSWORD: admin
 
+keycloak_realm: "pokecrawler"
+keycloak_client_id: "frontend-client"
+
+keycloak_username: "ash"
+keycloak_user_pass: "pikachu123"
+keycloak_user_firstname: "Ash"
+keycloak_user_lastname: "Ketchum"
+keycloak_user_email: "ash@pokecrawler.com"

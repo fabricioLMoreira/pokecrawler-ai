@@ -1,4 +1,5 @@
-dockerhub_user: a2009076370
+#dockerhub_user: a2009076370
+dockerhub_user: flmoreira
 dockerhub_tag: latest
 
 database_host: postgres
@@ -8,14 +9,13 @@ database_env:
   POSTGRES_USER: user
   POSTGRES_PASSWORD: password
 
-backend_host: "backend"
-backend_port: "8000"
-
+frontend_host: "localhost"
 frontend_port: "3000"
+
+backend_host: "localhost"
+backend_port: "8000"
 
 keycloak_host: "localhost"
 keycloak_port: "8180"
-keycloak_realm: "pokecrawler"
-keycloak_client_id: "frontend-client"
 
 jenkins_port: 8080

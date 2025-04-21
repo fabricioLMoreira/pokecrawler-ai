@@ -1,2 +1,1 @@
 crawler_image: "{{ dockerhub_user }}/crawler"
-crawler_ports: []
