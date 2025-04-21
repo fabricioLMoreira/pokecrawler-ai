@@ -72,7 +72,7 @@ Located in `ansible/inventory/<env>/group_vars/`
 ## 🐳 Install Docker (manually or via Ansible)
 
 ```bash
-ansible-playbook playbooks/docker.yml
+sudo ansible-playbook playbooks/docker.yml
 ```
 
 ---
@@ -97,10 +97,10 @@ Inside `secrets.yml`, add:
 ngrok_auth_token: "YOUR_TOKEN"
 ```
 
-Run with:
+Run ansible playbook with sudo:
 
 ```bash
-ansible-playbook playbooks/ngrok.yml --ask-vault-pass
+sudo ansible-playbook playbooks/ngrok.yml --ask-vault-pass
 ```
 
 Or use the bundled setup:
