@@ -87,6 +87,14 @@ pipeline {
              }
    	}
 
+  stages {
+    stage('Build') {
+      steps {
+        // Simular falha
+        sh 'exit 1'
+      }
+    }
+  }
 
 }
 
