@@ -41,6 +41,10 @@
     return_content: yes
   register: keycloak_token
 
+- name: Wait 30 seconds for Keycloak to start
+  wait_for:
+    timeout: 30
+
 - name: Create pokecrawler realm
   uri:
     url: "http://{{ keycloak_host }}:{{ keycloak_port }}/admin/realms"
