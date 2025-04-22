@@ -21,6 +21,13 @@ pipeline {
             }
         } */
 
+    stage('Build') {
+       steps {
+         // Simular falha
+         sh 'exit 1'
+       }
+     }
+
         stage('Docker Login') {
             steps {
                 withCredentials([usernamePassword(
